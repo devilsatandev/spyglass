@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,19 +10,37 @@
         theme: {
           extend: {
             colors: {
-              'brand-primary': '#00BFFF', // DeepSkyBlue
-              'brand-secondary': '#1E90FF', // DodgerBlue
-              'base-100': '#0d1117', // Very dark blue-gray, almost black
-              'base-200': '#161b22', // Dark blue-gray
-              'base-300': '#21262d', // Medium dark blue-gray
-              'text-primary': '#c9d1d9', // Light gray
-              'text-secondary': '#8b949e', // Medium gray
+              'brand-primary': '#00ff41', // Matrix Green
+              'brand-secondary': '#008f11', // Darker Matrix Green
+              'base-100': '#000000', // Black
+              'base-200': '#0a0a0a', // Near Black
+              'base-300': '#1a1a1a', // Dark Gray
+              'text-primary': '#00ff41', // Matrix Green
+              'text-secondary': '#008f11', // Darker Matrix Green
             },
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
+              sans: ['"Share Tech Mono"', 'monospace'],
             },
             animation: {
               'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'highlight-item': 'highlight-bg 2s ease-out',
+              'flicker': 'flicker 1.5s infinite alternate',
+            },
+            keyframes: {
+              'highlight-bg': {
+                '0%, 100%': { backgroundColor: '#1a1a1a' }, // base-300
+                '50%': { backgroundColor: 'rgba(0, 255, 65, 0.15)' }, // brand-primary with opacity
+              },
+              'flicker': {
+                '0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%': {
+                  textShadow: '0 0 5px #00ff41, 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 40px #00ff41, 0 0 80px #00ff41',
+                  opacity: 1,
+                },
+                '20%, 24%, 55%': {
+                  textShadow: 'none',
+                  opacity: 0.8,
+                }
+              }
             }
           }
         }
@@ -31,7 +48,7 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <script type="importmap">
 {
   "imports": {
@@ -46,6 +63,48 @@
   }
 }
 </script>
+<style>
+  body {
+    background-color: #000;
+    color: #00ff41;
+  }
+  .prose-invert {
+    color: #00ff41;
+  }
+  .prose-invert h1, .prose-invert h2, .prose-invert h3, .prose-invert strong {
+    color: #00ff41;
+  }
+  .prose-invert a {
+    color: #00ff41;
+  }
+   .prose-invert a:hover {
+    color: #33ff66;
+  }
+  .prose-li:marker {
+    color: #00ff41 !important;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+    -webkit-text-fill-color: #00ff41 !important;
+    caret-color: #00ff41;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #008f11;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00ff41;
+  }
+</style>
 </head>
   <body>
     <div id="root"></div>

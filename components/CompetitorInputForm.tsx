@@ -1,9 +1,8 @@
-
 import React, { useState, useMemo } from 'react';
 import { Users, Search, Loader2, AlertCircle } from 'lucide-react';
 
 interface CompetitorInputFormProps {
-  onAnalyze: (competitors: string[]) => void;
+  onAnalyze: (competitors: string[], type: 'regular' | 'deep') => void;
   isLoading: boolean;
 }
 
@@ -31,15 +30,23 @@ const CompetitorInputForm: React.FC<CompetitorInputFormProps> = ({ onAnalyze, is
     newErrors[index] = validateCompetitor(value);
     setErrors(newErrors);
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  
+  const runValidation = (): boolean => {
     const newErrors = competitors.map(c => validateCompetitor(c));
     setErrors(newErrors);
+    return !newErrors.some(error => error !== '');
+  }
 
-    const hasErrors = newErrors.some(error => error !== '');
-    if (!hasErrors) {
-      onAnalyze(competitors);
+  const handleRegularSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (runValidation()) {
+      onAnalyze(competitors, 'regular');
+    }
+  };
+
+  const handleDeepSubmit = () => {
+    if (runValidation()) {
+      onAnalyze(competitors, 'deep');
     }
   };
 
@@ -50,7 +57,7 @@ const CompetitorInputForm: React.FC<CompetitorInputFormProps> = ({ onAnalyze, is
   const isSubmitDisabled = isLoading || isFormInvalid;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-base-200 p-6 sm:p-8 rounded-xl border border-base-300 shadow-lg">
+    <form onSubmit={handleRegularSubmit} className="space-y-6 bg-base-200 p-6 sm:p-8 rounded-lg border border-base-300 shadow-lg">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[0, 1, 2].map((index) => (
           <div key={index}>
@@ -60,11 +67,11 @@ const CompetitorInputForm: React.FC<CompetitorInputFormProps> = ({ onAnalyze, is
                 type="text"
                 value={competitors[index]}
                 onChange={(e) => handleInputChange(index, e.target.value)}
-                placeholder={`Concorrente ${index + 1}`}
-                className={`w-full pl-10 pr-4 py-3 bg-base-300 rounded-lg outline-none transition duration-200 text-text-primary placeholder-text-secondary ${
+                placeholder={`Target ${index + 1}`}
+                className={`w-full pl-10 pr-4 py-3 bg-base-300 rounded-md outline-none transition duration-200 text-text-primary placeholder-text-secondary caret-brand-primary ${
                   errors[index]
                     ? 'border-red-500 focus:ring-1 focus:ring-red-500 border'
-                    : 'border border-base-300 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary'
+                    : 'border border-base-300 focus:ring-1 focus:ring-brand-primary focus:border-brand-primary'
                 }`}
                 aria-invalid={!!errors[index]}
                 aria-describedby={`error-${index}`}
@@ -79,11 +86,11 @@ const CompetitorInputForm: React.FC<CompetitorInputFormProps> = ({ onAnalyze, is
           </div>
         ))}
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
         <button
           type="submit"
           disabled={isSubmitDisabled}
-          className="flex items-center justify-center gap-2 px-8 py-3 w-full sm:w-auto bg-brand-primary hover:bg-brand-secondary text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-600 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+          className="flex items-center justify-center gap-2 px-8 py-3 w-full sm:w-auto bg-brand-secondary hover:bg-brand-primary text-black font-semibold rounded-md transition-all duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
           {isLoading ? (
             <>
@@ -93,7 +100,26 @@ const CompetitorInputForm: React.FC<CompetitorInputFormProps> = ({ onAnalyze, is
           ) : (
             <>
               <Search className="w-5 h-5" />
-              Gerar Relatório de Inteligência
+              Análise Padrão
+            </>
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={handleDeepSubmit}
+          disabled={isSubmitDisabled}
+          className="flex items-center justify-center gap-2 px-8 py-3 w-full sm:w-auto bg-base-300 hover:bg-brand-secondary/20 text-text-primary font-semibold rounded-md transition-all duration-300 ease-in-out border border-brand-secondary disabled:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          title="Usa pesquisa na web para uma análise mais profunda e atualizada"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              Analisando...
+            </>
+          ) : (
+            <>
+              <Search className="w-5 h-5" />
+              Investigação Profunda
             </>
           )}
         </button>

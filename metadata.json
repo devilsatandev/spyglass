@@ -1,5 +1,7 @@
 {
   "name": "Spyglass: Marketing Intel",
-  "description": "An application that acts as a digital marketing spy, generating a competitive intelligence analysis plan for up to three competitors, focusing on traffic sources, content strategy, sales funnels, and exploitable weaknesses.",
-  "requestFramePermissions": []
+  "description": "An application that acts as a digital marketing spy, generating a competitive intelligence analysis plan with integrated AI actions to generate creative assets like images, videos, and audio summaries directly from the report.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }
