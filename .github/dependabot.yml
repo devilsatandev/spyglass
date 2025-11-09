@@ -1,0 +1,11 @@
+# Para começar a usar as atualizações de versão do Dependabot, você precisa especificar qual
+# ecossistemas de pacotes para atualizar e apenas os manifestos de pacotes estão localizados.
+# Consulte uma documentação para todas as operações de configuração:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+versão: 2
+atualizações:
+  - ecossistema de pacotes: "" # Consulte uma documentação para obter valores possíveis
+ diretor: "/" # Localização dos manifestos de pacotes
+ agendar:
+ intervalo: "semanalmente"
